@@ -14,7 +14,7 @@ def search(request):
     else:
         form = PostForm()
 
-        return render_to_response(
+        return render(
             'home.html',
             {'form': form}
         )
