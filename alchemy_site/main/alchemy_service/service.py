@@ -6,10 +6,10 @@ from alchemy_settings.hidden import API_KEY
 class AlchemyService():
     alchemy_data_news = AlchemyDataNewsV1(api_key=API_KEY)
 
-    def __init__():
+    def __init__(self):
         pass
 
-    def getResults(search):
+    def getResults(self, search):
         results = alchemy_data_news.get_news_documents(start='now-7d', end='now',
                                                        time_slice='12h')
 
