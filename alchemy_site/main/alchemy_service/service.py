@@ -22,7 +22,7 @@ class AlchemyService():
                            'enriched.url.publicationDate'],
             query_fields={
                 'q.enriched.url.enrichedTitle.entities.entity':
-                    '|text=IBM,type=company|'})
+                    '|text=' + search + ',type=company|'})
 
         print(json.dumps(results, indent=2))
 
