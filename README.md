@@ -22,3 +22,7 @@ Steps to running application:
 8. Run this command: `python manage.py runserver` in the Terminal
 
 The app should run without problems!
+
+NOTE: Going forward, you'll have to run this to run the application:
+* `source env/bin/activate` in the cse5914ibmdemo folder, with the env folder.
+* `python manage.py runserver` in the 'alchemy_site' folder, where the 'manage.py' file is. 
