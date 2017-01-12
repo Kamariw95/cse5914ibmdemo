@@ -4,15 +4,15 @@ from django.http import HttpResponse
 from main.alchemy_service.service import AlchemyService
 from .forms import PostForm
 
-def index(request):
-    return redirect('search/')
-
 def search(request):
     if request.method == 'POST':
-        alchemy_service = AlchemyService()
-        print request
-        #alchemy_service.getResults(request)
-        return render(request, 'home.html', {'positive_articles': {}, 'negative_articles': {}})
+        InputForm = PostForm(request.POST)
+        if InputForm.is_valid():
+            alchemy_service = AlchemyService()
+            alchemy_service.getResults(request.POST['search'])
+            return render(request, 'home.html', {'positive_articles': {}, 'negative_articles': {}, 'error': False})
+        else:
+            return render(request, 'home.html', {'error': True })
     else:
         form = PostForm()
         return render(request, 'home.html', {'form': form})

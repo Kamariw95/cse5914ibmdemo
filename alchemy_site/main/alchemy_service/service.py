@@ -25,3 +25,6 @@ class AlchemyService():
                     '|text=IBM,type=company|'})
 
         print(json.dumps(results, indent=2))
+
+    def filterResults(self, results):
+        pass
