@@ -1,13 +1,17 @@
 import json
 from watson_developer_cloud import AlchemyDataNewsV1
 from alchemy_settings.hidden import API_KEY
+from main.dto.alchemy_item import AlchemyItem
+from main.dto.alchemy_result import AlchemyResult
+from .false_data import alchemy_data
 
 
 class AlchemyService():
-    alchemy_data_news = AlchemyDataNewsV1(api_key=API_KEY)
 
     def __init__(self):
-        pass
+        self.alchemy_data_news = AlchemyDataNewsV1(api_key=API_KEY)
+        self.positive_articles = []
+        self.negative_articles = []
     '''
     getResults(self, search): Takes in the search text and is supposed to return an object.
         This object would have 2 objects inside:
@@ -17,21 +21,43 @@ class AlchemyService():
         do return filterResults(results)
     '''
     def getResults(self, search):
-        results = alchemy_data_news.get_news_documents(start='now-7d', end='now',
-                                                       time_slice='12h')
 
-        results = alchemy_data_news.get_news_documents(
-            start='1453334400',
-            end='1454022000',
+        """
+        alchemy_data = self.alchemy_data_news.get_news_documents(
+            start='now-7d',
+            end='now',
             return_fields=['enriched.url.title',
                            'enriched.url.url',
                            'enriched.url.author',
-                           'enriched.url.publicationDate'],
+                           'enriched.url.publicationDate',
+                           'enriched.url.enrichedTitle.docSentiment'],
             query_fields={
                 'q.enriched.url.enrichedTitle.entities.entity':
-                    '|text=' + search + ',type=company|'})
+                    '|text=' + search + '|'})
+        """
+        docs_obj = alchemy_data['result']['docs']
 
-        print(json.dumps(results, indent=2))
+        for doc in docs_obj:
+            print(json.dumps(doc, indent=2))
+            if(doc['source']['enriched']['url']['enrichedTitle']['docSentiment']['type'] == "negative"):
+                title = doc['source']['enriched']['url']['title']
+                url = doc['source']['enriched']['url']['url']
+                author = doc['source']['enriched']['url']['author']
+
+                item = AlchemyItem(title, url, author)
+                self.negative_articles.append(item)
+            elif(doc['source']['enriched']['url']['enrichedTitle']['docSentiment']['type'] == "positive"):
+                title = doc['source']['enriched']['url']['title']
+                url = doc['source']['enriched']['url']['url']
+                author = doc['source']['enriched']['url']['author']
+
+                item = AlchemyItem(title, url, author)
+                self.positive_articles.append(item)
+            else: #This is where the neutral articles come.
+                pass
+
+        result = AlchemyResult(self.positive_articles, self.negative_articles)
+        return result
 
     '''
     filterResults(self, results, type_flag): This would take in the results and return back the result object that

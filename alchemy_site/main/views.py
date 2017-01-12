@@ -9,8 +9,8 @@ def search(request):
         InputForm = PostForm(request.POST)
         if InputForm.is_valid():
             alchemy_service = AlchemyService()
-            alchemy_service.getResults(request.POST['search'])
-            return render(request, 'home.html', {'positive_articles': {}, 'negative_articles': {}, 'error': False})
+            result = alchemy_service.getResults(request.POST['search'])
+            return render(request, 'home.html', {'positive_articles': result.positive_articles, 'negative_articles': result.negative_articles, 'error': False})
         else:
             return render(request, 'home.html', {'error': True })
     else:
