@@ -1,0 +1,57 @@
+{% load staticfiles %}
+
+<html lang='en'>
+  <head>
+    {% block css %}
+    <!-- Latest compiled and minified CSS -->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">-->
+
+    <!-- Your stuff: Third-party css libraries go here -->
+
+    <!-- This file store project specific CSS -->
+    <link href="{% static 'css/project.css' %}" rel="stylesheet">
+
+    {% endblock css %}
+  </head>
+  <body>
+    <!-- Add Navigation -->
+    <nav class = "navbar navbar-static-top navbar-dark bg-inverse">
+      <div class="container">
+        <a class="navbar-brand" href="/">McCormick Excel App</a>
+        <ul class = "nav navbar-nav">
+          <li class="nav-item">
+            <a class = "nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class = "nav-link" href ="/admin">Admin</a>
+          </li>
+          <li class="nav-item">
+            <a class = "nav-link" href= "/">Settings</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    {% block content %}
+
+
+    {% endblock content %}
+  </body>
+
+  {% block javascript %}
+  <!-- Latest JQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+  <!-- Tether - a requirement for Bootstrap tooltips -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js"></script>
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
+
+  <!-- Your stuff: Third-party javascript libraries go here -->
+  <script src="{% static 'js/spin.js' %}"></script>
+  <!-- place project specific Javascript in this file -->
+
+  <script src="{% static 'js/project.js' %}"></script>
+
+  {% endblock javascript %}
+</html>
